@@ -236,6 +236,7 @@ obj/
 *.unityproj
 *.booproj
 /.vs/
+*.vs/
 
 # ============ #
 # OS generated #
@@ -247,4 +248,3 @@ obj/
 .Trashes
 ehthumbs.db
 Thumbs.db
-
