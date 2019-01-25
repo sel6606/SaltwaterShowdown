@@ -233,6 +233,7 @@ obj/
 *.pidb
 *.suo
 /*.sln
+*.sln
 *.user
 *.unityproj
 *.booproj
