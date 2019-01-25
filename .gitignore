@@ -229,13 +229,16 @@ obj/
 *.svd
 *.userprefs
 /*.csproj
+*.csproj
 *.pidb
 *.suo
 /*.sln
+*.sln
 *.user
 *.unityproj
 *.booproj
 /.vs/
+*.vs/
 
 # ============ #
 # OS generated #
@@ -247,4 +250,3 @@ obj/
 .Trashes
 ehthumbs.db
 Thumbs.db
-
