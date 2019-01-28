@@ -20,6 +20,12 @@ public class StateManager : MonoBehaviour {
     //Variables for attacking
     public GameObject bullet;
 
+    //Variables for transitioning to defensive state
+    public ParticleSystem defenseMask;
+    public float dTransitionTime;
+    public float dTransitionTimer;
+    public int numDefensiveLights;
+
     // Use this for initialization
     void Start () {
 		
@@ -29,6 +35,16 @@ public class StateManager : MonoBehaviour {
 	void Update () {
 
         currentState.UpdateState(this);
+
+        //Count down to switch to the Defense state as long as the
+        //ai is not already in the Defense state
+        if (currentState.state != AIState.DefenseTransition)
+        {
+            if (numDefensiveLights > 0 && dTransitionTimer > 0)
+            {
+                dTransitionTimer -= Time.deltaTime;
+            }
+        }
     }
 
     /// <summary>
