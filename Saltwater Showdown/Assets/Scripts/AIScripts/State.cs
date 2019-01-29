@@ -6,11 +6,11 @@ using UnityEngine;
 /// Contains all of the possible AI states
 /// </summary>
 public enum AIState {
-    DefenseTransition,
-    Move,
-    Attack,
     Damaged,
-    Death
+    Death,
+    Normal,
+    DefenseTransition,
+    Defense,
 };
 
 /// <summary>

@@ -8,9 +8,6 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "AI/Decisions/DefenseTransition")]
 public class DefenseTransitionDecision : Decision
 {
-    [Range(0.0f, 1.0f)]
-    public float chanceToDefend;
-
     /// <summary>
     /// Checks if the AI is ready to transition to the Defense state
     /// </summary>
@@ -28,20 +25,11 @@ public class DefenseTransitionDecision : Decision
     /// <returns>true if ready; false if not</returns>
     private bool ReadyToDefend(StateManager stateManager)
     {
-        if (stateManager.numDefensiveLights > 0 && stateManager.dTransitionTimer <= 0)
+        if (Mathf.Floor(stateManager.health) % 3 == 0)
         {
-            //Reset timer
-            stateManager.dTransitionTimer = stateManager.dTransitionTime;
+            stateManager.isMoving = false;
 
-            //Get a random chance
-            float rand = Random.Range(0.0f, 1.0f);
-
-            if (rand <= chanceToDefend)
-            {
-                return true;
-            }
-
-            return false;
+            return true;
         }
 
         return false;

@@ -19,9 +19,19 @@ public class DefenseTransitionAction : Action
 
     private void MaskTransformation(StateManager stateManager)
     {
-        if (stateManager.defenseMask.isStopped)
-        {
-            stateManager.defenseMask.Play();
-        }
+        //if (stateManager.defenseMask.isStopped)
+        //{
+        //    stateManager.defenseMask.Play();
+        //}
+
+        //Move back to the starting position
+        stateManager.transform.position = stateManager.normalSpotsToMove[0].transform.position;
+        stateManager.currDefSpot = 1;
+
+        //Switch Sprite
+        stateManager.GetComponent<SpriteRenderer>().sprite = stateManager.defense;
+
+        //Mark that the AI is entering the defense state
+        stateManager.enteringDefense = true;
     }
 }
