@@ -9,8 +9,9 @@ public enum AIState {
     Damaged,
     Death,
     Normal,
-    DefenseTransition,
+    NormalTransition,
     Defense,
+    DefenseTransition,
 };
 
 /// <summary>

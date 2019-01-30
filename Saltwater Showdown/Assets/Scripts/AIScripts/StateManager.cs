@@ -31,9 +31,12 @@ public class StateManager : MonoBehaviour {
     public GameObject bullet;
 
     //Variables for moving
+    public Vector3 tempPos;
     public int currentPos;
     public int nextPos;
+    public int posIncrementor;
     public float movePercent;
+    public bool reconfiguring;
 
     //Variables for Normal state
     public GameObject[] normalStatePositions;
@@ -45,15 +48,8 @@ public class StateManager : MonoBehaviour {
     public bool finishedMask;
     public bool finishedTransformation;
 
-    public bool enteringDefense;
-    public ParticleSystem defenseMask;
-    public int numDefensiveLights;
-
     //Variables for Defense state
-    public GameObject[] defenseSpotsToMove;
-    public int currDefSpot;
-    public int defSpotIncrementor;
-    public float defMovePercent;
+    public GameObject[] defenseStatePositions;
 
 
     // Use this for initialization
@@ -79,7 +75,7 @@ public class StateManager : MonoBehaviour {
     /// <param name="collision">object collided with</param>
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (currentState.state == AIState.DefenseTransition)
+        if (currentState.state == AIState.DefenseTransition || currentState.state == AIState.NormalTransition)
             return;
 
         if (collision.gameObject.CompareTag("Urchin"))
@@ -88,12 +84,13 @@ public class StateManager : MonoBehaviour {
             if (currentState.state == AIState.Defense)
             {
                 health -= 0.5f;
-                numHits++;
             }
             else
             {
                 health -= 1.0f;
             }
+
+            numHits++;
 
             //Only reset the blink timer if the AI is finished
             //animating the previous damage, otherwise continue
@@ -134,8 +131,16 @@ public class StateManager : MonoBehaviour {
             //Reset the blink interval timer
             blinkIntervalTimer = blinkInterval;
 
-            //Make sure the AI is visible
-            GetComponent<SpriteRenderer>().enabled = true;
+            if (currentState.state == AIState.Normal)
+            {
+                //Blink the AI
+                normal.GetComponent<SpriteRenderer>().enabled = true;
+            }
+            else if (currentState.state == AIState.Defense)
+            {
+                //Blink the AI
+                defense.GetComponent<SpriteRenderer>().enabled = true;
+            }
         }
 
         //Blink the AI to animate the damage
@@ -148,8 +153,17 @@ public class StateManager : MonoBehaviour {
                 //Reset the timer
                 blinkIntervalTimer = blinkInterval;
 
-                //Blink the AI
-                GetComponent<SpriteRenderer>().enabled = !GetComponent<SpriteRenderer>().enabled;
+                if (currentState.state == AIState.Normal)
+                {
+                    //Blink the AI
+                    normal.GetComponent<SpriteRenderer>().enabled = !normal.GetComponent<SpriteRenderer>().enabled;
+                }
+                else if (currentState.state == AIState.Defense)
+                {
+                    //Blink the AI
+                    defense.GetComponent<SpriteRenderer>().enabled = !defense.GetComponent<SpriteRenderer>().enabled;
+                }
+                
             }
         }
     }

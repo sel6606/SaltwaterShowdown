@@ -8,8 +8,6 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "AI/Decisions/DefenseToNormal")]
 public class DefenseToNormalDecision : Decision
 {
-    public int maxHits;
-
     public override bool MakeDecision(StateManager stateManager)
     {
         return BrokenDefense(stateManager);
@@ -17,12 +15,24 @@ public class DefenseToNormalDecision : Decision
 
     private bool BrokenDefense(StateManager stateManager)
     {
-        if (stateManager.numHits == maxHits)
+        if (stateManager.finishedTransformation)
         {
-            stateManager.numHits = 0;
+            //Reset the AI's finished status
+            stateManager.finishedMask = false;
+            stateManager.finishedTransformation = false;
 
-            //Move back to the starting position
-            //stateManager.transform.position = stateManager.normalSpotsToMove[0].transform.position;
+            //Choose a random position to move to
+            stateManager.currentPos = Random.Range(0, stateManager.normalStatePositions.Length);
+            stateManager.nextPos = stateManager.currentPos;
+
+            //Reset previously stored data for moving (which was stored in the Normal state)
+            stateManager.movePercent = 0;
+
+            //Store the AI's current position to use for LERPing
+            stateManager.tempPos = stateManager.transform.position;
+
+            //Mark that the AI needs to reconfigure its position to properly move between defenseStatePositions
+            stateManager.reconfiguring = true;
 
             return true;
         }

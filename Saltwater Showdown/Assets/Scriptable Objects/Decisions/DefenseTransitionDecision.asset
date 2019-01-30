@@ -11,4 +11,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b985aaab1c2c7304eb14a09635b3dac1, type: 3}
   m_Name: DefenseTransitionDecision
   m_EditorClassIdentifier: 
-  hitThreshold: 0
+  hitThreshold: 2

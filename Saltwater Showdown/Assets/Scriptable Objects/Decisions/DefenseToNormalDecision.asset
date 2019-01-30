@@ -11,4 +11,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76dacdf9c9c08df4a892f76f753d88fd, type: 3}
   m_Name: DefenseToNormalDecision
   m_EditorClassIdentifier: 
-  maxHits: 3
+  maxHits: 1

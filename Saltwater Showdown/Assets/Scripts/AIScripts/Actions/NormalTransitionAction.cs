@@ -2,12 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// Class to handle the AI's transformation to the Defense state
-/// </summary>
-[CreateAssetMenu(menuName = "AI/Actions/DefenseTransition")]
-public class DefenseTransitionAction : Action
-{
+[CreateAssetMenu(menuName = "AI/Actions/NormalTransition")]
+public class NormalTransitionAction : Action {
+
     public float maxEmission;
     public float maxRotSpeed;
     public float rotSpeedIncrementor;
@@ -62,11 +59,11 @@ public class DefenseTransitionAction : Action
             stateManager.transform.rotation = Quaternion.identity;
             stateManager.rotationSpeed = 0;
 
-            //Remove the sprite for the Normal state
-            stateManager.normal.SetActive(false);
+            //Remove the sprite for the Defense state
+            stateManager.defense.SetActive(false);
 
-            //Make the sprite for the Defense state visible
-            stateManager.defense.SetActive(true);
+            //Make the sprite for the Normal state visible
+            stateManager.normal.SetActive(true);
 
             //Stop the particle system
             bubbles.Stop();

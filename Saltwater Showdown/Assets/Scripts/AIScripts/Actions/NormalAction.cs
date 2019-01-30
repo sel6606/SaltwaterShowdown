@@ -55,7 +55,7 @@ public class NormalAction : Action
     private void Move(StateManager stateManager)
     {
         //Get the vectors to use for Lerping
-        Vector3 currPos = stateManager.normalStatePositions[stateManager.currentPos].transform.position;
+        Vector3 currPos = stateManager.reconfiguring ? stateManager.tempPos : stateManager.normalStatePositions[stateManager.currentPos].transform.position;
         Vector3 nextPos = stateManager.normalStatePositions[stateManager.nextPos].transform.position;
 
         //Adjust the Lerp percent and clamp it if necessary
@@ -68,6 +68,12 @@ public class NormalAction : Action
         //Arrived at next spot
         if (stateManager.movePercent >= 1.0f)
         {
+            //Mark that the AI is finished reconfiguring
+            if (stateManager.reconfiguring)
+            {
+                stateManager.reconfiguring = false;
+            }
+
             //Update current spot
             stateManager.currentPos = stateManager.nextPos;
 

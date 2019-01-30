@@ -25,37 +25,46 @@ public class DefenseAction : Action
     /// <param name="stateManager">Script attached to AI that manages switching between states</param>
     private void MoveBackAndForth(StateManager stateManager)
     {
-        //Increment down when the AI has reached the last spot in the array
-        if (stateManager.currDefSpot == stateManager.defenseSpotsToMove.Length - 1)
-        {
-            stateManager.defSpotIncrementor = -1;
-        }
-
-        //Increment up when the AI has reached the first spot in the array
-        else if (stateManager.currDefSpot == 0)
-        {
-            stateManager.defSpotIncrementor = 1;
-        }
-
         //Get the vectors to use for Lerping
-        Vector3 currPos = stateManager.defenseSpotsToMove[stateManager.currDefSpot].transform.position;
-        Vector3 nextPos = stateManager.defenseSpotsToMove[stateManager.currDefSpot + stateManager.defSpotIncrementor].transform.position;
+        Vector3 currPos = stateManager.reconfiguring ? stateManager.tempPos : stateManager.defenseStatePositions[stateManager.currentPos].transform.position;
+        Vector3 nextPos = stateManager.defenseStatePositions[stateManager.nextPos].transform.position;
 
         //Adjust the Lerp percent and clamp it if necessary
-        stateManager.defMovePercent += Time.deltaTime * moveSpeed;
-        Mathf.Clamp(stateManager.defMovePercent, 0.0f, 1.0f);
+        stateManager.movePercent += Time.deltaTime * moveSpeed;
+        Mathf.Clamp(stateManager.movePercent, 0.0f, 1.0f);
 
         //Lerp
-        stateManager.transform.position = Vector3.Lerp(currPos, nextPos, stateManager.defMovePercent);
+        stateManager.transform.position = Vector3.Lerp(currPos, nextPos, stateManager.movePercent);
 
         //Arrived at next spot
-        if (stateManager.defMovePercent >= 1.0f)
+        if (stateManager.movePercent >= 1.0f)
         {
+            //Mark that the AI is finished reconfiguring
+            if (stateManager.reconfiguring)
+            {
+                stateManager.reconfiguring = false;
+            }
+
             //Update current spot
-            stateManager.currDefSpot += stateManager.defSpotIncrementor;
+            stateManager.currentPos = stateManager.nextPos;
+
+            //Increment down when the AI has reached the last spot in the array
+            if (stateManager.currentPos == stateManager.defenseStatePositions.Length - 1)
+            {
+                stateManager.posIncrementor = -1;
+            }
+
+            //Increment up when the AI has reached the first spot in the array
+            else if (stateManager.currentPos == 0)
+            {
+                stateManager.posIncrementor = 1;
+            }
+
+            //Update the next spot
+            stateManager.nextPos += stateManager.posIncrementor;
 
             //Reset the move percent
-            stateManager.defMovePercent = 0;
+            stateManager.movePercent = 0;
         }
     }
 }

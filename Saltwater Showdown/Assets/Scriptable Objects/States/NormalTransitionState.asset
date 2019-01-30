@@ -9,10 +9,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4445868cf6573664cb0c0ac3a4c4e2e7, type: 3}
-  m_Name: DefenseState
+  m_Name: NormalTransitionState
   m_EditorClassIdentifier: 
-  state: 4
-  action: {fileID: 11400000, guid: af4ceeb438bd7af4296c67eb115d799f, type: 2}
+  state: 3
+  action: {fileID: 11400000, guid: 50646708fdee2c1499ebbddc32f48350, type: 2}
   transitions:
-  - decision: {fileID: 11400000, guid: bbf52da921973ab468abd5f33bc9b890, type: 2}
-    nextState: {fileID: 11400000, guid: 98d48854bdace0b489ffb1c48adef68f, type: 2}
+  - decision: {fileID: 11400000, guid: 6ad0c49c538c23b47b6c5ea72327fb1d, type: 2}
+    nextState: {fileID: 11400000, guid: 7f2ee63c846db534e9aacc2f212907a6, type: 2}

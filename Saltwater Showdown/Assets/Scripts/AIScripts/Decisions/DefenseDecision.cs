@@ -25,10 +25,30 @@ public class DefenseDecision : Decision
     /// <returns>true if entering defense state; false if note</returns>
     private bool EnteringDefensiveState(StateManager stateManager)
     {
-        if (stateManager.enteringDefense)
+        if (stateManager.finishedTransformation)
         {
-            stateManager.enteringDefense = false;
-            stateManager.currDefSpot = 1;
+            //Reset the AI's finished status
+            stateManager.finishedMask = false;
+            stateManager.finishedTransformation = false;
+
+            //Reset the count for the number of times the AI was hit for a specific state
+            stateManager.numHits = 0;
+
+            //Choose a random position to move to
+            stateManager.currentPos = Random.Range(0, stateManager.defenseStatePositions.Length);
+            stateManager.nextPos = stateManager.currentPos;
+
+            //Reset previously stored data for moving (which was stored in the Normal state)
+            stateManager.movePercent = 0;
+
+            //Set the incrementor to 1 since we are starting at position 0
+            stateManager.posIncrementor = 1;
+
+            //Store the AI's current position to use for LERPing
+            stateManager.tempPos = stateManager.transform.position;
+
+            //Mark that the AI needs to reconfigure its position to properly move between defenseStatePositions
+            stateManager.reconfiguring = true;
 
             return true;
         }
