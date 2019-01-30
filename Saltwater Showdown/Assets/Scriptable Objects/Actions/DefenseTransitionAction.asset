@@ -11,3 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d5b0335dd5fcc6479fc9ef1cbcb9bb3, type: 3}
   m_Name: DefenseTransitionAction
   m_EditorClassIdentifier: 
+  maxEmission: 80
+  maxRotSpeed: 30
+  rotSpeedIncrementor: 2
+  emiSpeedIncrementor: 4

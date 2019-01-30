@@ -16,10 +16,13 @@ public class NormalAction : Action
     /// <param name="stateManager">Script attached to AI that manages switching between states</param>
     public override void PerformAction(StateManager stateManager)
     {
-        if (!stateManager.isMoving)
+        //AI is idle - Check to see if it should move
+        if (stateManager.currentPos == stateManager.nextPos)
         {
             CheckIfReadyToMove(stateManager);
         }
+
+        //AI is moving
         else
         {
             Move(stateManager);
@@ -41,14 +44,7 @@ public class NormalAction : Action
             stateManager.idleTimer = stateManager.idleTime;
 
             //Get a random spot to move to
-            stateManager.nextSpot = Random.Range(0, stateManager.normalSpotsToMove.Length);
-
-            //Only start moving if the next spot is different from the current spot
-            if (stateManager.nextSpot != stateManager.currentSpot)
-            {
-                stateManager.isMoving = true;
-                stateManager.movePercent = 0;
-            }
+            stateManager.nextPos = Random.Range(0, stateManager.normalStatePositions.Length);
         }
     }
 
@@ -59,8 +55,8 @@ public class NormalAction : Action
     private void Move(StateManager stateManager)
     {
         //Get the vectors to use for Lerping
-        Vector3 currPos = stateManager.normalSpotsToMove[stateManager.currentSpot].transform.position;
-        Vector3 nextPos = stateManager.normalSpotsToMove[stateManager.nextSpot].transform.position;
+        Vector3 currPos = stateManager.normalStatePositions[stateManager.currentPos].transform.position;
+        Vector3 nextPos = stateManager.normalStatePositions[stateManager.nextPos].transform.position;
 
         //Adjust the Lerp percent and clamp it if necessary
         stateManager.movePercent += Time.deltaTime * moveSpeed;
@@ -73,13 +69,10 @@ public class NormalAction : Action
         if (stateManager.movePercent >= 1.0f)
         {
             //Update current spot
-            stateManager.currentSpot = stateManager.nextSpot;
+            stateManager.currentPos = stateManager.nextPos;
 
             //Reset the move percent
             stateManager.movePercent = 0;
-
-            //Mark that the AI is no longer moving
-            stateManager.isMoving = false;
         }
     }
 }

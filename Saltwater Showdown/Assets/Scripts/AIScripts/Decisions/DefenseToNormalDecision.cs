@@ -22,11 +22,7 @@ public class DefenseToNormalDecision : Decision
             stateManager.numHits = 0;
 
             //Move back to the starting position
-            stateManager.transform.position = stateManager.normalSpotsToMove[0].transform.position;
-            stateManager.currentSpot = 0;
-
-            //Switch Sprite
-            stateManager.GetComponent<SpriteRenderer>().sprite = stateManager.normal;
+            //stateManager.transform.position = stateManager.normalSpotsToMove[0].transform.position;
 
             return true;
         }

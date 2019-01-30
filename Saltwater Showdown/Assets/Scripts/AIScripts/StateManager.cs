@@ -12,12 +12,12 @@ public class StateManager : MonoBehaviour {
     public State currentState;
     public State previousState;
 
-    //Variables to hold different sprites
-    public Sprite normal;
-    public Sprite defense;
+    public GameObject normal;
+    public GameObject defense;
 
     //Variables for damaging the AI
     public float health;
+    public int numHits;
     public GameObject[] weakPoints;
     public GameObject[] weakPointPositions;
 
@@ -30,17 +30,21 @@ public class StateManager : MonoBehaviour {
     //Variables for attacking
     public GameObject bullet;
 
-    //Variables for Normal state
-    public float idleTime;
-    public float idleTimer;
-    public bool isMoving;
-
-    public GameObject[] normalSpotsToMove;
-    public int currentSpot;
-    public int nextSpot;
+    //Variables for moving
+    public int currentPos;
+    public int nextPos;
     public float movePercent;
 
-    //Variables for transitioning to defensive state
+    //Variables for Normal state
+    public GameObject[] normalStatePositions;
+    public float idleTime;
+    public float idleTimer;
+
+    //Variables for masking transitions
+    public float rotationSpeed;
+    public bool finishedMask;
+    public bool finishedTransformation;
+
     public bool enteringDefense;
     public ParticleSystem defenseMask;
     public int numDefensiveLights;
@@ -50,7 +54,6 @@ public class StateManager : MonoBehaviour {
     public int currDefSpot;
     public int defSpotIncrementor;
     public float defMovePercent;
-    public int numHits;
 
 
     // Use this for initialization

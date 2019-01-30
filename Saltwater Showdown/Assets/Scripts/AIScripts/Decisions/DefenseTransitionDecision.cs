@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Class for transitioning to the Defensive State
+/// Class for transitioning to the Defense State
 /// </summary>
 [CreateAssetMenu(menuName = "AI/Decisions/DefenseTransition")]
 public class DefenseTransitionDecision : Decision
 {
+    public int hitThreshold;
+
     /// <summary>
     /// Checks if the AI is ready to transition to the Defense state
     /// </summary>
@@ -25,10 +27,8 @@ public class DefenseTransitionDecision : Decision
     /// <returns>true if ready; false if not</returns>
     private bool ReadyToDefend(StateManager stateManager)
     {
-        if (Mathf.Floor(stateManager.health) % 3 == 0)
+        if (stateManager.currentState.state != AIState.Defense && stateManager.numHits >= hitThreshold)
         {
-            stateManager.isMoving = false;
-
             return true;
         }
 
