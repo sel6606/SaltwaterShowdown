@@ -16,19 +16,16 @@ public class StateManager : MonoBehaviour {
     public GameObject defense;
 
     //Variables for damaging the AI
-    public float health;
     public int numHits;
-    public GameObject[] weakPoints;
-    public GameObject[] weakPointPositions;
+    public int numLights;
+
+    public Color damageColor;
+    public bool animatingDamage;
 
     public float blinkTime;
     public float blinkTimer;
     public float blinkInterval;
     public float blinkIntervalTimer;
-    public bool animatingDamage;
-
-    //Variables for attacking
-    public GameObject bullet;
 
     //Variables for moving
     public Vector3 tempPos;
@@ -70,42 +67,6 @@ public class StateManager : MonoBehaviour {
     }
 
     /// <summary>
-    /// Checks for collision with sea urchin to deal damage to the AI
-    /// </summary>
-    /// <param name="collision">object collided with</param>
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (currentState.state == AIState.DefenseTransition || currentState.state == AIState.NormalTransition)
-            return;
-
-        if (collision.gameObject.CompareTag("Urchin"))
-        {
-            //Reduce damage when defending
-            if (currentState.state == AIState.Defense)
-            {
-                health -= 0.5f;
-            }
-            else
-            {
-                health -= 1.0f;
-            }
-
-            numHits++;
-
-            //Only reset the blink timer if the AI is finished
-            //animating the previous damage, otherwise continue
-            //animating the previous damage
-            if (blinkTimer <= 0)
-            {
-                blinkTimer = blinkTime;
-            }
-
-            //Mark that the AI is ready to animate damage
-            animatingDamage = true;
-        }
-    }
-
-    /// <summary>
     /// Switches the state of the AI
     /// </summary>
     /// <param name="nextState">state to switch to</param>
@@ -127,20 +88,18 @@ public class StateManager : MonoBehaviour {
         {
             //Mark that the AI is finished animating damage
             animatingDamage = false;
+
+            //Change the color back to normal
+            normal.GetComponent<SpriteRenderer>().color = Color.white;
+
+            //Re-enable the collider
+            normal.GetComponent<PolygonCollider2D>().enabled = true;
             
             //Reset the blink interval timer
             blinkIntervalTimer = blinkInterval;
 
-            if (currentState.state == AIState.Normal)
-            {
-                //Blink the AI
-                normal.GetComponent<SpriteRenderer>().enabled = true;
-            }
-            else if (currentState.state == AIState.Defense)
-            {
-                //Blink the AI
-                defense.GetComponent<SpriteRenderer>().enabled = true;
-            }
+            //Ensure the AI is visible
+            normal.GetComponent<SpriteRenderer>().enabled = true;
         }
 
         //Blink the AI to animate the damage
@@ -153,17 +112,8 @@ public class StateManager : MonoBehaviour {
                 //Reset the timer
                 blinkIntervalTimer = blinkInterval;
 
-                if (currentState.state == AIState.Normal)
-                {
-                    //Blink the AI
-                    normal.GetComponent<SpriteRenderer>().enabled = !normal.GetComponent<SpriteRenderer>().enabled;
-                }
-                else if (currentState.state == AIState.Defense)
-                {
-                    //Blink the AI
-                    defense.GetComponent<SpriteRenderer>().enabled = !defense.GetComponent<SpriteRenderer>().enabled;
-                }
-                
+                //Blink the AI
+                normal.GetComponent<SpriteRenderer>().enabled = !normal.GetComponent<SpriteRenderer>().enabled;
             }
         }
     }
