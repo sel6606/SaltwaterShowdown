@@ -23,7 +23,7 @@ public class HitDetection : MonoBehaviour {
                 return;
 
             //Special case: Don't check for collisions if the masking isn't finished
-            //This occurs when transitioning from Defense to Normal state
+            //This occurs when transitioning into the Normal state
             if (ai.GetComponent<ParticleSystem>().isPlaying)
                 return;
 

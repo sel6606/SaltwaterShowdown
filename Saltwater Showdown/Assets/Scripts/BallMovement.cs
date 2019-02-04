@@ -28,6 +28,7 @@ public class BallMovement : MonoBehaviour
         if(readyToStart && Input.GetKey(KeyCode.Space))
         {
             readyToStart = false;
+            GameInfo.instance.GameStart = true;
             BeginMovement();
         }
 	}

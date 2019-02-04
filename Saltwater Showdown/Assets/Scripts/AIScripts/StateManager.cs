@@ -57,12 +57,16 @@ public class StateManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        currentState.UpdateState(this);
-
-        //Show that the AI took damage when hit
-        if (animatingDamage)
+        if (GameInfo.instance.GameStart && !GameInfo.instance.Paused)
         {
-            AnimateDamage();
+            //Update the state
+            currentState.UpdateState(this);
+
+            //Show that the AI took damage when hit
+            if (animatingDamage)
+            {
+                AnimateDamage();
+            }
         }
     }
 

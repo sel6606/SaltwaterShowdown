@@ -6,8 +6,6 @@ using UnityEngine;
 /// Contains all of the possible AI states
 /// </summary>
 public enum AIState {
-    Damaged,
-    Death,
     Normal,
     NormalTransition,
     Defense,
