@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4445868cf6573664cb0c0ac3a4c4e2e7, type: 3}
   m_Name: DefenseState
   m_EditorClassIdentifier: 
-  state: 4
+  state: 2
   action: {fileID: 11400000, guid: af4ceeb438bd7af4296c67eb115d799f, type: 2}
   transitions:
   - decision: {fileID: 11400000, guid: bbf52da921973ab468abd5f33bc9b890, type: 2}

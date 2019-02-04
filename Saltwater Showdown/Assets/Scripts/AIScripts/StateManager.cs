@@ -21,6 +21,7 @@ public class StateManager : MonoBehaviour {
 
     public Color damageColor;
     public bool animatingDamage;
+    public bool reenableCollision;
 
     public float blinkTime;
     public float blinkTimer;
@@ -67,6 +68,12 @@ public class StateManager : MonoBehaviour {
             {
                 AnimateDamage();
             }
+
+            //Re-enable collisions when done animating
+            else if (reenableCollision)
+            {
+                ReEnableCollisions();
+            }
         }
     }
 
@@ -95,9 +102,6 @@ public class StateManager : MonoBehaviour {
 
             //Change the color back to normal
             normal.GetComponent<SpriteRenderer>().color = Color.white;
-
-            //Re-enable the collider
-            normal.GetComponent<PolygonCollider2D>().enabled = true;
             
             //Reset the blink interval timer
             blinkIntervalTimer = blinkInterval;
@@ -120,5 +124,15 @@ public class StateManager : MonoBehaviour {
                 normal.GetComponent<SpriteRenderer>().enabled = !normal.GetComponent<SpriteRenderer>().enabled;
             }
         }
+    }
+
+    /// <summary>
+    /// Enables collisions after the AI has been hit
+    /// </summary>
+    private void ReEnableCollisions()
+    {
+        //Switch collider back to a normal collider
+        reenableCollision = false;
+        normal.GetComponent<PolygonCollider2D>().isTrigger = false;
     }
 }

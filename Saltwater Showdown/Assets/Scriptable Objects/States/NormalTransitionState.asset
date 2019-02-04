@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4445868cf6573664cb0c0ac3a4c4e2e7, type: 3}
   m_Name: NormalTransitionState
   m_EditorClassIdentifier: 
-  state: 3
+  state: 1
   action: {fileID: 11400000, guid: 50646708fdee2c1499ebbddc32f48350, type: 2}
   transitions:
   - decision: {fileID: 11400000, guid: 6ad0c49c538c23b47b6c5ea72327fb1d, type: 2}

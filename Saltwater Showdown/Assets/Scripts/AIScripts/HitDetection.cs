@@ -30,8 +30,11 @@ public class HitDetection : MonoBehaviour {
             //Update the number of times the AI was hit in its current state
             ai.numHits++;
 
-            //Turn off the collider to avoid being hit while blinking
-            gameObject.GetComponent<PolygonCollider2D>().enabled = false;
+            //Temporarily convert to trigger
+            gameObject.GetComponent<PolygonCollider2D>().isTrigger = true;
+
+            //Mark that collisions should be re-enabled when ready
+            ai.reenableCollision = true;
 
             //Reset blink timer
             ai.blinkTimer = ai.blinkTime;
@@ -41,6 +44,38 @@ public class HitDetection : MonoBehaviour {
 
             //Mark that the AI is ready to animate damage
             ai.animatingDamage = true;
+        }
+    }
+
+    /// <summary>
+    /// Handles collisions
+    /// </summary>
+    /// <param name="collision">object collided with</param>
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Urchin"))
+        {
+            //Get reference to the AI
+            StateManager ai = transform.parent.GetComponent<StateManager>();
+
+            //Mark that the collision shouldn't be re-enabled until the urchin exits the trigger
+            ai.reenableCollision = false;
+        }
+    }
+
+    /// <summary>
+    /// Handles collisions
+    /// </summary>
+    /// <param name="collision">object collided with</param>
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Urchin"))
+        {
+            //Get reference to the AI
+            StateManager ai = transform.parent.GetComponent<StateManager>();
+
+            //Mark that the collision should be re-enabled since the urchin is out of the AI
+            ai.reenableCollision = true;
         }
     }
 }
