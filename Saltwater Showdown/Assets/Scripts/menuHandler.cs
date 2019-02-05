@@ -86,6 +86,30 @@ public class menuHandler : MonoBehaviour {
         }
     }
 
+    public void ToggleWin()
+    {
+        if (winPanel.activeInHierarchy)
+        {
+            winPanel.SetActive(false);
+        }
+        else
+        {
+            winPanel.SetActive(true);
+        }
+    }
+
+    public void ToggleGameOver()
+    {
+        if (gameOverPanel.activeInHierarchy)
+        {
+            gameOverPanel.SetActive(false);
+        }
+        else
+        {
+            gameOverPanel.SetActive(true);
+        }
+    }
+
     /// <summary>
     /// Quits the game
     /// </summary>
