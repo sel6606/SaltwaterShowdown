@@ -26,6 +26,26 @@ public class LightExplosion : MonoBehaviour {
         {
             Destroy(gameObject);
         }
+
+        //Pause the particle system on pause
+        if (GameInfo.instance.Paused)
+        {
+            if (gameObject.GetComponent<ParticleSystem>().isPlaying)
+            {
+                gameObject.GetComponent<ParticleSystem>().Pause();
+            }
+        }
+
+        //Resume the particle system if it was paused
+        //Note: We play and stop to ensure the particle system ends
+        else
+        {
+            if (gameObject.GetComponent<ParticleSystem>().isPaused)
+            {
+                gameObject.GetComponent<ParticleSystem>().Play();
+                gameObject.GetComponent<ParticleSystem>().Stop();
+            }
+        }
     }
 
     /// <summary>

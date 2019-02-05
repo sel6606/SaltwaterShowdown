@@ -15,6 +15,8 @@ public class StateManager : MonoBehaviour {
     public GameObject normal;
     public GameObject defense;
 
+    public Sprite baseDefSprite;
+
     //Variables for damaging the AI
     public int numHits;
     public int maxHits;
@@ -84,6 +86,47 @@ public class StateManager : MonoBehaviour {
             if (reenableDefense)
             {
                 ConvertDefenseFromTrigger();
+            }
+        }
+
+        if (GameInfo.instance.Paused)
+        {
+            //Pause the particle system if it's playing
+            if (gameObject.GetComponent<ParticleSystem>().isPlaying)
+            {
+                gameObject.GetComponent<ParticleSystem>().Pause(false);
+            }
+
+            //Pause the animation
+            if (defense.GetComponent<Animator>().speed == 1)
+            {
+                defense.GetComponent<Animator>().speed = 0;
+            }
+        }
+        else
+        {
+            //Resume the particle system if it was paused
+            if (gameObject.GetComponent<ParticleSystem>().isPaused)
+            {
+                //If the AI finished transitioning, the particle system should be stopping
+                //Note: Play and then Stop the particle system to have it resume from a pause
+                if (currentState.state == AIState.Normal || currentState.state == AIState.Defense)
+                {
+                    gameObject.GetComponent<ParticleSystem>().Play(false);
+                    gameObject.GetComponent<ParticleSystem>().Stop(false);
+                }
+
+                //The AI is still transitioning, continue playing the particles
+                else
+                {
+                    gameObject.GetComponent<ParticleSystem>().Play(false);
+                }
+            }
+
+            //Play the animation if it was paused
+            if (defense.GetComponent<Animator>().speed == 0)
+            {
+                defense.GetComponent<Animator>().speed = 1;
             }
         }
     }

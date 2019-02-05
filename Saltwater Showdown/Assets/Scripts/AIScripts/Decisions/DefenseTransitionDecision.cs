@@ -30,6 +30,10 @@ public class DefenseTransitionDecision : BeforeTransitionDecision
         {
             stateManager.DisableNormalSprite();
 
+            //Note: Disabling the game object when an animation is playing changes the sprite,
+            //so make sure the AI starts off with the correct sprite
+            stateManager.defense.GetComponent<SpriteRenderer>().sprite = stateManager.baseDefSprite;
+
             return true;
         }
 

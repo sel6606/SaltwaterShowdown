@@ -20552,6 +20552,7 @@ MonoBehaviour:
   previousState: {fileID: 11400000, guid: 7f2ee63c846db534e9aacc2f212907a6, type: 2}
   normal: {fileID: 1433864228}
   defense: {fileID: 1958594634}
+  baseDefSprite: {fileID: 21300000, guid: 3180b84e855487a4c8d10cb37e945e01, type: 3}
   numHits: 0
   maxHits: 2
   numLights: 3
