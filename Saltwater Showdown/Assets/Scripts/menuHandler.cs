@@ -5,18 +5,25 @@ using UnityEngine.SceneManagement;
 
 public class menuHandler : MonoBehaviour {
 
+    //UI panels for display
     public GameObject OptionsPanel;
     public GameObject HowToPanel;
     public GameObject LevelPanel;
+    public GameObject pausePanel;
+    public GameObject winPanel;
+    public GameObject gameOverPanel;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
 		
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
+		if (Input.GetKeyDown(KeyCode.Escape) && !HowToPanel.activeInHierarchy)
+        {
+            TogglePause();
+        }
 	}
 
     /// <summary>
@@ -64,13 +71,42 @@ public class menuHandler : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// toggles pause panel displays
+    /// </summary>
+    public void TogglePause()
+    {
+        if (pausePanel.activeInHierarchy)
+        {
+            pausePanel.SetActive(false);
+        }
+        else
+        {
+            pausePanel.SetActive(true);
+        }
+    }
+
+    /// <summary>
+    /// Quits the game
+    /// </summary>
     public void QuitGame()
     {
         Application.Quit();
     }
 
+    /// <summary>
+    /// Loads the game scene from the level select
+    /// </summary>
     public void loadGame()
     {
         SceneManager.LoadScene("LevelOne", LoadSceneMode.Single);
+    }
+
+    /// <summary>
+    /// Button hookup that quits the game scene and returns to the menu scene
+    /// </summary>
+    public void returnToMenu()
+    {
+        SceneManager.LoadScene("Menus", LoadSceneMode.Single);
     }
 }
