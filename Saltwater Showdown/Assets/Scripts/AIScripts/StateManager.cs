@@ -17,11 +17,13 @@ public class StateManager : MonoBehaviour {
 
     //Variables for damaging the AI
     public int numHits;
+    public int maxHits;
     public int numLights;
 
     public Color damageColor;
     public bool animatingDamage;
-    public bool reenableCollision;
+    public bool reenableNormal;
+    public bool reenableDefense;
 
     public float blinkTime;
     public float blinkTimer;
@@ -58,7 +60,7 @@ public class StateManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        if (GameInfo.instance.GameStart && !GameInfo.instance.Paused)
+        if (GameInfo.instance.GameStart && !GameInfo.instance.GameOver && !GameInfo.instance.Paused)
         {
             //Update the state
             currentState.UpdateState(this);
@@ -69,10 +71,19 @@ public class StateManager : MonoBehaviour {
                 AnimateDamage();
             }
 
-            //Re-enable collisions when done animating
-            else if (reenableCollision)
+            //Re-enable collisions when done animating.
+            //This also re-enables collisions when switching from Defense
+            //to Normal state.
+            else if (reenableNormal)
             {
-                ReEnableCollisions();
+                ConvertNormalFromTrigger();
+            }
+
+            //This re-enables collisions when switching from Normal
+            //to Defense state
+            if (reenableDefense)
+            {
+                ConvertDefenseFromTrigger();
             }
         }
     }
@@ -86,7 +97,84 @@ public class StateManager : MonoBehaviour {
         previousState = currentState;
         currentState = nextState;
     }
-    
+
+    /// <summary>
+    /// Disables collisions for the Normal sprite
+    /// </summary>
+    public void DisableNormalSprite()
+    {
+        normal.GetComponent<PolygonCollider2D>().enabled = false;
+    }
+
+    /// <summary>
+    /// Enables collisions for the Normal sprite
+    /// </summary>
+    public void EnableNormalSprite()
+    {
+        //IMPORTANT: When re-enabling, make sure to set to isTrigger just in case
+        //the urchin is inside the collider when re-enabling.
+        normal.GetComponent<PolygonCollider2D>().enabled = true;
+        normal.GetComponent<PolygonCollider2D>().isTrigger = true;
+
+        //IMPORTANT: Mark this as true so that the AI can turn off the trigger
+        //when the urchin is outside of the collider
+        reenableNormal = true;
+    }
+
+    /// <summary>
+    /// Turns the collider into a normal collider (not trigger)
+    /// </summary>
+    private void ConvertNormalFromTrigger()
+    {
+        //Switch collider back to a normal collider
+        reenableNormal = false;
+        normal.GetComponent<PolygonCollider2D>().isTrigger = false;
+    }
+
+    /// <summary>
+    /// Disables collisions for the Defense sprite
+    /// </summary>
+    public void DisableDefenseSprite()
+    {
+        for (int i = 0; i < defense.transform.childCount; i++)
+        {
+            defense.transform.GetChild(i).GetComponent<CircleCollider2D>().enabled = false;
+        }
+    }
+
+    /// <summary>
+    /// Enables collisions for the Defense sprite
+    /// </summary>
+    public void EnableDefenseSprite()
+    {
+        for (int i = 0; i < defense.transform.childCount; i++)
+        {
+            //IMPORTANT: When re-enabling, make sure to set to isTrigger just in case
+            //the urchin is inside the collider when re-enabling.
+            defense.transform.GetChild(i).GetComponent<CircleCollider2D>().enabled = true;
+            defense.transform.GetChild(i).GetComponent<CircleCollider2D>().isTrigger = true;
+        }
+
+        //IMPORTANT: Mark this as true so that the AI can turn off the trigger
+        //when the urchin is outside of the collider
+        reenableDefense = true;
+    }
+
+    /// <summary>
+    /// Turns the collider into a normal collider (not trigger)
+    /// </summary>
+    private void ConvertDefenseFromTrigger()
+    {
+        //Reset variable
+        reenableDefense = false;
+
+        //Switch collider back to a normal collider
+        for (int i = 0; i < defense.transform.childCount; i++)
+        {
+            defense.transform.GetChild(i).GetComponent<CircleCollider2D>().isTrigger = false;
+        }
+    }
+
     /// <summary>
     /// Provides visual cues that the AI has taken damage
     /// </summary>
@@ -124,15 +212,5 @@ public class StateManager : MonoBehaviour {
                 normal.GetComponent<SpriteRenderer>().enabled = !normal.GetComponent<SpriteRenderer>().enabled;
             }
         }
-    }
-
-    /// <summary>
-    /// Enables collisions after the AI has been hit
-    /// </summary>
-    private void ReEnableCollisions()
-    {
-        //Switch collider back to a normal collider
-        reenableCollision = false;
-        normal.GetComponent<PolygonCollider2D>().isTrigger = false;
     }
 }

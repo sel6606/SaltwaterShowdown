@@ -2,22 +2,33 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Class for entering the Normal Transition state
+/// </summary>
 [CreateAssetMenu(menuName = "AI/Decisions/NormalTransition")]
-public class NormalTransitionDecision : Decision {
+public class NormalTransitionDecision : BeforeTransitionDecision {
 
-    public int maxHits;
-
+    /// <summary>
+    /// Checks if the AI took enough damage to start its transition
+    /// </summary>
+    /// <param name="stateManager">Script attached to AI that manages switching between states</param>
+    /// <returns>true if took enough damage; false if not</returns>
     public override bool MakeDecision(StateManager stateManager)
     {
         return BrokenDefense(stateManager);
     }
 
+    /// <summary>
+    /// Checks if the AI took enough damage to start its transition
+    /// </summary>
+    /// <param name="stateManager">Script attached to AI that manages switching between states</param>
+    /// <returns>true if took enough damage; false if not</returns>
     private bool BrokenDefense(StateManager stateManager)
     {
-        if (stateManager.numHits == maxHits)
+        //Disable collisions with the sprite when the transition is occurring
+        if (ReachedThreshold(stateManager))
         {
-            //Reset the count for the number of times the AI was hit for a specific state
-            stateManager.numHits = 0;
+            stateManager.DisableDefenseSprite();
 
             return true;
         }

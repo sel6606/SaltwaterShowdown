@@ -7,6 +7,29 @@ using UnityEngine;
 /// </summary>
 public class HitDetection : MonoBehaviour {
 
+    private StateManager ai;
+
+    private bool readyToDestroy;
+
+    // Use this for initialization
+    void Start ()
+    {
+        ai = transform.parent.GetComponent<StateManager>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        //Destroy the AI after it has been hit and its particles have stopped
+        if (readyToDestroy && gameObject.GetComponent<ParticleSystem>().isStopped)
+        {
+            //Mark that the game is over
+            GameInfo.instance.GameOver = true;
+
+            Destroy(gameObject);
+        }
+    }
+
     /// <summary>
     /// Handles collisions
     /// </summary>
@@ -15,35 +38,44 @@ public class HitDetection : MonoBehaviour {
     {
         if (collision.gameObject.CompareTag("Urchin"))
         {
-            //Get reference to the AI
-            StateManager ai = transform.parent.GetComponent<StateManager>();
-
             //Only check for collisions while in the Normal state
             if (ai.currentState.state != AIState.Normal)
                 return;
 
-            //Special case: Don't check for collisions if the masking isn't finished
-            //This occurs when transitioning into the Normal state
-            if (ai.GetComponent<ParticleSystem>().isPlaying)
-                return;
-
-            //Update the number of times the AI was hit in its current state
+            //Update the number of times the AI was hit
             ai.numHits++;
 
-            //Temporarily convert to trigger
-            gameObject.GetComponent<PolygonCollider2D>().isTrigger = true;
+            //The AI can no longer go to the Defense state and is ready to die
+            if (ai.numLights <= 0 && ai.numHits >= ai.maxHits)
+            {
+                //Play the death particles
+                gameObject.GetComponent<ParticleSystem>().Play();
 
-            //Mark that collisions should be re-enabled when ready
-            ai.reenableCollision = true;
+                //Hide this object
+                gameObject.GetComponent<SpriteRenderer>().enabled = false;
 
-            //Reset blink timer
-            ai.blinkTimer = ai.blinkTime;
+                //Mark that the AI should be destroyed
+                readyToDestroy = true;
+            }
 
-            //Set its damage color
-            gameObject.GetComponent<SpriteRenderer>().color = ai.damageColor;
+            //The AI can still go to the Defense state
+            else
+            {
+                //Temporarily convert to trigger
+                gameObject.GetComponent<PolygonCollider2D>().isTrigger = true;
 
-            //Mark that the AI is ready to animate damage
-            ai.animatingDamage = true;
+                //Mark that collisions should be re-enabled when ready
+                ai.reenableNormal = true;
+
+                //Reset blink timer
+                ai.blinkTimer = ai.blinkTime;
+
+                //Set its damage color
+                gameObject.GetComponent<SpriteRenderer>().color = ai.damageColor;
+
+                //Mark that the AI is ready to animate damage
+                ai.animatingDamage = true;
+            }
         }
     }
 
@@ -55,11 +87,8 @@ public class HitDetection : MonoBehaviour {
     {
         if (collision.gameObject.CompareTag("Urchin"))
         {
-            //Get reference to the AI
-            StateManager ai = transform.parent.GetComponent<StateManager>();
-
             //Mark that the collision shouldn't be re-enabled until the urchin exits the trigger
-            ai.reenableCollision = false;
+            ai.reenableNormal = false;
         }
     }
 
@@ -71,11 +100,8 @@ public class HitDetection : MonoBehaviour {
     {
         if (collision.gameObject.CompareTag("Urchin"))
         {
-            //Get reference to the AI
-            StateManager ai = transform.parent.GetComponent<StateManager>();
-
-            //Mark that the collision should be re-enabled since the urchin is out of the AI
-            ai.reenableCollision = true;
+            //Mark that the collision should be re-enabled since the urchin is out of the trigger
+            ai.reenableNormal = true;
         }
     }
 }

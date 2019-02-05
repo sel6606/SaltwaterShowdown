@@ -3,32 +3,33 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Class for transitioning to the Defense State
+/// Class for entering the Defense Transition state
 /// </summary>
 [CreateAssetMenu(menuName = "AI/Decisions/DefenseTransition")]
-public class DefenseTransitionDecision : Decision
+public class DefenseTransitionDecision : BeforeTransitionDecision
 {
-    public int hitThreshold;
-
     /// <summary>
-    /// Checks if the AI is ready to transition to the Defense state
+    /// Checks if the AI took enough damage to start its transition
     /// </summary>
     /// <param name="stateManager">Script attached to AI that manages switching between states</param>
-    /// <returns>true if ready; false if not</returns>
+    /// <returns>true if took enough damage; false if not</returns>
     public override bool MakeDecision(StateManager stateManager)
     {
         return ReadyToDefend(stateManager);
     }
 
     /// <summary>
-    /// Checks if the AI is ready to transition to the Defense state
+    /// Checks if the AI took enough damage to start its transition
     /// </summary>
     /// <param name="stateManager">Script attached to AI that manages switching between states</param>
-    /// <returns>true if ready; false if not</returns>
+    /// <returns>true if took enough damage; false if not</returns>
     private bool ReadyToDefend(StateManager stateManager)
     {
-        if (stateManager.currentState.state != AIState.Defense && stateManager.numHits >= hitThreshold)
+        //Disable collisions with the sprite when the transition is occurring
+        if (ReachedThreshold(stateManager) && stateManager.numLights > 0)
         {
+            stateManager.DisableNormalSprite();
+
             return true;
         }
 

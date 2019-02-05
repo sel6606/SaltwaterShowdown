@@ -8,6 +8,26 @@ using UnityEngine;
 /// </summary>
 public class LightExplosion : MonoBehaviour {
 
+    private StateManager ai;
+
+    private bool readyToDestroy;
+
+    // Use this for initialization
+    void Start()
+    {
+        ai = transform.parent.parent.GetComponent<StateManager>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        //Destroy the light after it has been hit and its particles have stopped
+        if (readyToDestroy && gameObject.GetComponent<ParticleSystem>().isStopped)
+        {
+            Destroy(gameObject);
+        }
+    }
+
     /// <summary>
     /// Checks collisions
     /// </summary>
@@ -16,8 +36,9 @@ public class LightExplosion : MonoBehaviour {
     {
         if (collision.gameObject.CompareTag("Urchin"))
         {
-            //Get reference to the AI
-            StateManager ai = transform.parent.parent.GetComponent<StateManager>();
+            //Only check for collisions while in the Defense state
+            if (ai.currentState.state != AIState.Defense)
+                return;
 
             //This check ensures that two lights won't get destroyed at the same time
             if (ai.numHits == 0)
@@ -31,9 +52,38 @@ public class LightExplosion : MonoBehaviour {
                 //Play the particle system to show an explosion
                 gameObject.GetComponent<ParticleSystem>().Play();
 
-                //Remove this object
-                Destroy(gameObject);
+                //Make the light invisible
+                gameObject.GetComponent<SpriteRenderer>().enabled = false;
+
+                //Mark that the light should be destroyed
+                readyToDestroy = true;
             }
+        }
+    }
+
+    /// <summary>
+    /// Handles collisions
+    /// </summary>
+    /// <param name="collision">object collided with</param>
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Urchin"))
+        {
+            //Mark that the collision shouldn't be re-enabled until the urchin exits the trigger
+            ai.reenableDefense = false;
+        }
+    }
+
+    /// <summary>
+    /// Handles collisions
+    /// </summary>
+    /// <param name="collision">object collided with</param>
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Urchin"))
+        {
+            //Mark that the collision should be re-enabled since the urchin is out of the trigger
+            ai.reenableDefense = true;
         }
     }
 }

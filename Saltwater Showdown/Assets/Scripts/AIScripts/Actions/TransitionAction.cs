@@ -13,12 +13,12 @@ public abstract class TransitionAction : Action {
     public float emiSpeedIncrementor;
 
     /// <summary>
-    /// 
+    /// Masks transitions with the particle system
     /// </summary>
-    /// <param name="stateManager"></param>
-    /// <param name="currSprite"></param>
-    /// <param name="nextSprite"></param>
-    private void ApplyMask(StateManager stateManager, GameObject currSprite, GameObject nextSprite)
+    /// <param name="stateManager">Script attached to AI that manages switching between states</param>
+    /// <param name="currSprite">sprite for current state</param>
+    /// <param name="nextSprite">sprite for next state being transitioned to</param>
+    protected void ApplyMask(StateManager stateManager, GameObject currSprite, GameObject nextSprite)
     {
         //Get reference to the particle system
         ParticleSystem bubbles = stateManager.gameObject.GetComponent<ParticleSystem>();
@@ -30,7 +30,7 @@ public abstract class TransitionAction : Action {
             emission.rateOverTime = 0;
 
             //Start the particle system
-            bubbles.Play();
+            bubbles.Play(false);
         }
 
         //Increase the emission rate until the max is reached (not worried about clamping)
@@ -55,14 +55,14 @@ public abstract class TransitionAction : Action {
             stateManager.transform.rotation = Quaternion.identity;
             stateManager.rotationSpeed = 0;
 
-            //Remove the sprite for the Defense state
+            //Remove the sprite for the current state
             currSprite.SetActive(false);
 
-            //Make the sprite for the Normal state visible
+            //Make the sprite for the next state visible
             nextSprite.SetActive(true);
 
             //Stop the particle system
-            bubbles.Stop();
+            bubbles.Stop(false);
 
             //Mark that the masking is complete
             stateManager.finishedMask = true;
@@ -70,23 +70,5 @@ public abstract class TransitionAction : Action {
             //Mark that the transformation is complete
             stateManager.finishedTransformation = true;
         }
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="stateManager"></param>
-    protected void MaskDefenseTransformation(StateManager stateManager)
-    {
-        ApplyMask(stateManager, stateManager.normal, stateManager.defense);
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="stateManager"></param>
-    protected void MaskNormalTransformation(StateManager stateManager)
-    {
-        ApplyMask(stateManager, stateManager.defense, stateManager.normal);
     }
 }

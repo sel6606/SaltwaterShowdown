@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 
+/// Class to handle the AI in its Defense state
 /// </summary>
 [CreateAssetMenu(menuName = "AI/Actions/Defense")]
 public class DefenseAction : Action
@@ -39,7 +39,7 @@ public class DefenseAction : Action
         //Arrived at next spot
         if (stateManager.movePercent >= 1.0f)
         {
-            //Mark that the AI is finished reconfiguring
+            //Mark that the AI is finished reconfiguring if needed
             if (stateManager.reconfiguring)
             {
                 stateManager.reconfiguring = false;
@@ -54,7 +54,7 @@ public class DefenseAction : Action
                 stateManager.posIncrementor = -1;
             }
 
-            //Increment up when the AI has reached the first spot in the array
+            //Increment up at any other spot in the array
             else if (stateManager.currentPos == 0)
             {
                 stateManager.posIncrementor = 1;

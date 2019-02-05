@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Class to handle the AI in its base state
+/// Class to handle the AI in its Normal state
 /// </summary>
 [CreateAssetMenu(menuName = "AI/Actions/Normal")]
 public class NormalAction : Action
@@ -68,7 +68,7 @@ public class NormalAction : Action
         //Arrived at next spot
         if (stateManager.movePercent >= 1.0f)
         {
-            //Mark that the AI is finished reconfiguring
+            //Mark that the AI is finished reconfiguring if needed
             if (stateManager.reconfiguring)
             {
                 stateManager.reconfiguring = false;
