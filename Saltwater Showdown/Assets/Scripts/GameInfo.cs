@@ -61,5 +61,6 @@ public class GameInfo : MonoBehaviour {
         gameStart = instance.gameStart;
         gameOver = instance.gameOver;
         paused = instance.paused;
+        win = instance.Win;
 	}
 }
