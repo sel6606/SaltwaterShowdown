@@ -27,6 +27,13 @@ public class menuHandler : MonoBehaviour {
             GameInfo.instance.Paused = true;
             Time.timeScale = 0;
         }
+
+        if (GameInfo.instance.GameOver && !gameOverPanel.activeInHierarchy)
+        {
+            ToggleGameOver();
+            GameInfo.instance.Paused = true;
+            Time.timeScale = 0;
+        }
     }
     // Update is called once per frame
     void Update ()

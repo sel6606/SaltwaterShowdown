@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 /// <summary>
@@ -7,7 +8,8 @@ using UnityEngine;
 /// </summary>
 public class BallMovement : MonoBehaviour
 {
-    public Vector2 startPos;
+    public GameObject start1;
+    public GameObject start2;
     public float yForce = -15;
     public float xForce = 20;
     public float maxSpeed;
@@ -19,9 +21,14 @@ public class BallMovement : MonoBehaviour
     public float bottomBound;
 
     public float speedScale;
+    public int maxLives;
+
+    public TextMeshProUGUI livesText;
 
     private Rigidbody2D ballRB;
     private bool readyToStart;
+    private bool isLeft;
+    private int livesRemaining;
 
     //This variable is for debugging purposes (i want to view the values in the inspector)
     public Vector2 velocityDebug;
@@ -29,8 +36,11 @@ public class BallMovement : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
+        livesRemaining = maxLives;
+        livesText.text = "Lives: " + maxLives;
         ballRB = GetComponent<Rigidbody2D>();
         readyToStart = true;
+        isLeft = false;
         Reset();
 	}
 	
@@ -51,6 +61,18 @@ public class BallMovement : MonoBehaviour
         clampedPos.y = Mathf.Clamp(clampedPos.y, bottomBound, topBound);
 
         transform.position = clampedPos;
+
+        if(readyToStart)
+        {
+            if (isLeft)
+            {
+                transform.position = start2.transform.position;
+            }
+            else
+            {
+                transform.position = start1.transform.position;
+            }
+        }
 	}
 
     /// <summary>
@@ -58,6 +80,7 @@ public class BallMovement : MonoBehaviour
     /// </summary>
     public void BeginMovement()
     {
+        ballRB.constraints = RigidbodyConstraints2D.FreezeRotation;
         //Pick a random direction
         float rand = Random.Range(0, 2);
 
@@ -78,8 +101,17 @@ public class BallMovement : MonoBehaviour
     {
         ballRB.velocity = Vector2.zero;
         ballRB.angularVelocity = 0;
-        transform.position = startPos;
-        readyToStart = true;
+        ballRB.constraints = RigidbodyConstraints2D.FreezeAll;
+
+        if (livesRemaining == 0)
+        {
+            GameInfo.instance.GameOver = true;
+            Destroy(gameObject);
+        }
+        else
+        {
+            readyToStart = true;
+        }
     }
 
     /// <summary>
@@ -90,6 +122,9 @@ public class BallMovement : MonoBehaviour
     {
         if (collision.collider.CompareTag("Out"))
         {
+            livesRemaining--;
+            isLeft = gameObject.transform.position.x < 0;
+            livesText.text = "Lives: " + livesRemaining;
             Reset();
         }
         else
