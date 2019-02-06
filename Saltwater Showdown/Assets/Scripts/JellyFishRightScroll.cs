@@ -17,11 +17,14 @@ public class JellyFishRightScroll : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        transform.position = new Vector3(transform.position.x + speed, transform.position.y, transform.position.z);
-
-        if (transform.position.x > bound)
+        if (!GameInfo.instance.Paused)
         {
-            transform.position = new Vector3(reset, transform.position.y, transform.position.z);
+            transform.position = new Vector3(transform.position.x + speed, transform.position.y, transform.position.z);
+
+            if (transform.position.x > bound)
+            {
+                transform.position = new Vector3(reset, transform.position.y, transform.position.z);
+            }
         }
     }
 }

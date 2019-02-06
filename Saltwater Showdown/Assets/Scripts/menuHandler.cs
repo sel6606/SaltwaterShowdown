@@ -17,10 +17,21 @@ public class menuHandler : MonoBehaviour {
     void Start () {
 		
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		if (Input.GetKeyDown(KeyCode.Escape) && !HowToPanel.activeInHierarchy)
+
+
+    private void LateUpdate()
+    {
+        if(GameInfo.instance.Win && !winPanel.activeInHierarchy)
+        {
+            ToggleWin();
+            GameInfo.instance.Paused = true;
+            Time.timeScale = 0;
+        }
+    }
+    // Update is called once per frame
+    void Update ()
+    {
+		if (SceneManager.GetActiveScene().name != "Menus" && Input.GetKeyDown(KeyCode.Escape) && !HowToPanel.activeInHierarchy && !GameInfo.instance.Win)
         {
             TogglePause();
         }
@@ -79,10 +90,14 @@ public class menuHandler : MonoBehaviour {
         if (pausePanel.activeInHierarchy)
         {
             pausePanel.SetActive(false);
+            GameInfo.instance.Paused = false;
+            Time.timeScale = 1;
         }
         else
         {
             pausePanel.SetActive(true);
+            GameInfo.instance.Paused = true;
+            Time.timeScale = 0;
         }
     }
 
@@ -131,6 +146,8 @@ public class menuHandler : MonoBehaviour {
     /// </summary>
     public void returnToMenu()
     {
+        GameInfo.instance.Paused = false;
+        Time.timeScale = 1;
         SceneManager.LoadScene("Menus", LoadSceneMode.Single);
     }
 }
