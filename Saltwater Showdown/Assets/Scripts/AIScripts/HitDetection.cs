@@ -62,6 +62,11 @@ public class HitDetection : MonoBehaviour {
             if (ai.currentState.state != AIState.Normal)
                 return;
 
+            //Special Case: do not check for collisions if particles are still playing
+            //This occurs when transitioning between states
+            if (ai.GetComponent<ParticleSystem>().isPlaying)
+                return;
+
             //Update the number of times the AI was hit
             ai.numHits++;
 

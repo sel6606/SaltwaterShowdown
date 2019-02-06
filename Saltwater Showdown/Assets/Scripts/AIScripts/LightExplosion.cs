@@ -60,6 +60,11 @@ public class LightExplosion : MonoBehaviour {
             if (ai.currentState.state != AIState.Defense)
                 return;
 
+            //Special Case: do not check for collisions if particles are still playing
+            //This occurs when transitioning between states
+            if (ai.GetComponent<ParticleSystem>().isPlaying)
+                return;
+
             //This check ensures that two lights won't get destroyed at the same time
             if (ai.numHits == 0)
             {

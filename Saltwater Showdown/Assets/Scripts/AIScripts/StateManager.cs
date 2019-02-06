@@ -73,17 +73,17 @@ public class StateManager : MonoBehaviour {
                 AnimateDamage();
             }
 
-            //Re-enable collisions when done animating.
+            //Re-enable collisions when done animating damage.
             //This also re-enables collisions when switching from Defense
             //to Normal state.
-            else if (reenableNormal)
+            else if (reenableNormal && !gameObject.GetComponent<ParticleSystem>().isPlaying)
             {
                 ConvertNormalFromTrigger();
             }
 
             //This re-enables collisions when switching from Normal
             //to Defense state
-            if (reenableDefense)
+            if (reenableDefense && !gameObject.GetComponent<ParticleSystem>().isPlaying)
             {
                 ConvertDefenseFromTrigger();
             }
