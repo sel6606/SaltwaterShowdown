@@ -369,6 +369,26 @@ Prefab:
       propertyPath: m_AnchoredPosition.y
       value: 26.200018
       objectReference: {fileID: 0}
+    - target: {fileID: 114248815551484154, guid: e38632af0ab7a8c4985acb9d228d895a,
+        type: 2}
+      propertyPath: m_text
+      value: How To Play
+      objectReference: {fileID: 0}
+    - target: {fileID: 114248815551484154, guid: e38632af0ab7a8c4985acb9d228d895a,
+        type: 2}
+      propertyPath: m_textInfo.characterCount
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 114248815551484154, guid: e38632af0ab7a8c4985acb9d228d895a,
+        type: 2}
+      propertyPath: m_textInfo.spaceCount
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114248815551484154, guid: e38632af0ab7a8c4985acb9d228d895a,
+        type: 2}
+      propertyPath: m_textInfo.wordCount
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e38632af0ab7a8c4985acb9d228d895a, type: 2}
   m_IsPrefabAsset: 0
