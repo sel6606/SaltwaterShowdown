@@ -26,6 +26,6 @@ public class NormalTransitionAction : TransitionAction {
     /// <param name="stateManager">Script attached to AI that manages switching between states</param>
     private void MaskNormalTransformation(StateManager stateManager)
     {
-        ApplyMask(stateManager, stateManager.defense, stateManager.normal);
+        ApplyMask(stateManager, stateManager.defense, stateManager.normal, stateManager.normalTransitionColor);
     }
 }

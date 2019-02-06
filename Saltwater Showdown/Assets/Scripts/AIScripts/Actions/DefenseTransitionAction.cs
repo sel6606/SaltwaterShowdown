@@ -26,6 +26,6 @@ public class DefenseTransitionAction : TransitionAction
     /// <param name="stateManager">Script attached to AI that manages switching between states</param>
     private void MaskDefenseTransformation(StateManager stateManager)
     {
-        ApplyMask(stateManager, stateManager.normal, stateManager.defense);
+        ApplyMask(stateManager, stateManager.normal, stateManager.defense, stateManager.defTransitionColor);
     }
 }

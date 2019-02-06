@@ -18,7 +18,7 @@ public abstract class TransitionAction : Action {
     /// <param name="stateManager">Script attached to AI that manages switching between states</param>
     /// <param name="currSprite">sprite for current state</param>
     /// <param name="nextSprite">sprite for next state being transitioned to</param>
-    protected void ApplyMask(StateManager stateManager, GameObject currSprite, GameObject nextSprite)
+    protected void ApplyMask(StateManager stateManager, GameObject currSprite, GameObject nextSprite, Color color)
     {
         //Get reference to the particle system
         ParticleSystem bubbles = stateManager.gameObject.GetComponent<ParticleSystem>();
@@ -28,6 +28,9 @@ public abstract class TransitionAction : Action {
         {
             //Set the base emission rate
             emission.rateOverTime = 0;
+
+            ParticleSystem.MainModule bubblesMain = bubbles.main;
+            bubblesMain.startColor = color;
 
             //Start the particle system
             bubbles.Play(false);

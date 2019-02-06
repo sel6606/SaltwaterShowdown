@@ -12,6 +12,7 @@ public class GameInfo : MonoBehaviour {
 
     private bool gameStart = false;
     private bool gameOver = false;
+    private bool win = false;
     private bool paused = false;
 
     public bool GameStart
@@ -24,6 +25,12 @@ public class GameInfo : MonoBehaviour {
     {
         get { return gameOver; }
         set { gameOver = value; }
+    }
+
+    public bool Win
+    {
+        get { return win; }
+        set { win = value; }
     }
 
     public bool Paused

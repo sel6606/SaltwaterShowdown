@@ -50,6 +50,9 @@ public class StateManager : MonoBehaviour {
     public bool finishedMask;
     public bool finishedTransformation;
 
+    public Color defTransitionColor;
+    public Color normalTransitionColor;
+
     //Variables for Defense state
     public GameObject[] defenseStatePositions;
 
@@ -62,7 +65,7 @@ public class StateManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        if (GameInfo.instance.GameStart && !GameInfo.instance.GameOver && !GameInfo.instance.Paused)
+        if (GameInfo.instance.GameStart && !GameInfo.instance.GameOver && !GameInfo.instance.Win && !GameInfo.instance.Paused)
         {
             //Update the state
             currentState.UpdateState(this);

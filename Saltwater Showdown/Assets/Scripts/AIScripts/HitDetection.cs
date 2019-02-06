@@ -23,8 +23,8 @@ public class HitDetection : MonoBehaviour {
         //Destroy the AI after it has been hit and its particles have stopped
         if (readyToDestroy && gameObject.GetComponent<ParticleSystem>().isStopped)
         {
-            //Mark that the game is over
-            GameInfo.instance.GameOver = true;
+            //Mark that the player won
+            GameInfo.instance.Win = true;
 
             Destroy(gameObject);
         }
