@@ -13,5 +13,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxEmission: 80
   maxRotSpeed: 30
-  rotSpeedIncrementor: 16
-  emiSpeedIncrementor: 20
+  rotSpeedIncrementor: 50
+  emiSpeedIncrementor: 50
