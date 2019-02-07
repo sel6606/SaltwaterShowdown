@@ -482,42 +482,42 @@ Prefab:
     - target: {fileID: 114248815551484154, guid: e38632af0ab7a8c4985acb9d228d895a,
         type: 2}
       propertyPath: m_havePropertiesChanged
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114248815551484154, guid: e38632af0ab7a8c4985acb9d228d895a,
         type: 2}
       propertyPath: m_isInputParsingRequired
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114510006695221580, guid: e38632af0ab7a8c4985acb9d228d895a,
         type: 2}
       propertyPath: m_havePropertiesChanged
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114510006695221580, guid: e38632af0ab7a8c4985acb9d228d895a,
         type: 2}
       propertyPath: m_isInputParsingRequired
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114384095576677460, guid: e38632af0ab7a8c4985acb9d228d895a,
         type: 2}
       propertyPath: m_havePropertiesChanged
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114384095576677460, guid: e38632af0ab7a8c4985acb9d228d895a,
         type: 2}
       propertyPath: m_isInputParsingRequired
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114692315136334298, guid: e38632af0ab7a8c4985acb9d228d895a,
         type: 2}
       propertyPath: m_havePropertiesChanged
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114692315136334298, guid: e38632af0ab7a8c4985acb9d228d895a,
         type: 2}
       propertyPath: m_isInputParsingRequired
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1475699198623488, guid: e38632af0ab7a8c4985acb9d228d895a, type: 2}
       propertyPath: m_IsActive
@@ -526,14 +526,16 @@ Prefab:
     - target: {fileID: 114779595750036462, guid: e38632af0ab7a8c4985acb9d228d895a,
         type: 2}
       propertyPath: m_text
-      value: '-Player 1 use W/S to move paddle
+      value: 'A 2 Player Co-Op experience where you battle against a series of underwater
+        assailants by passing your urchin projectile back and forth and striking the
+        enemy
 
+
+        -Player 1 use W/S to move paddle
 
         -Player 2 use UP/DOWN to move paddle
 
-
         -Hit Space to start
-
 
         -Hit Esc to pause
 
@@ -547,37 +549,37 @@ Prefab:
     - target: {fileID: 114779595750036462, guid: e38632af0ab7a8c4985acb9d228d895a,
         type: 2}
       propertyPath: m_textInfo.characterCount
-      value: 111
+      value: 268
       objectReference: {fileID: 0}
     - target: {fileID: 114779595750036462, guid: e38632af0ab7a8c4985acb9d228d895a,
         type: 2}
       propertyPath: m_textInfo.spaceCount
-      value: 25
+      value: 49
       objectReference: {fileID: 0}
     - target: {fileID: 114779595750036462, guid: e38632af0ab7a8c4985acb9d228d895a,
         type: 2}
       propertyPath: m_textInfo.lineCount
-      value: 7
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 114779595750036462, guid: e38632af0ab7a8c4985acb9d228d895a,
         type: 2}
       propertyPath: m_textInfo.wordCount
-      value: 24
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 224422199053638036, guid: e38632af0ab7a8c4985acb9d228d895a,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -85.69998
+      value: -77.6
       objectReference: {fileID: 0}
     - target: {fileID: 224063463361905294, guid: e38632af0ab7a8c4985acb9d228d895a,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 4.200012
+      value: 28.299997
       objectReference: {fileID: 0}
     - target: {fileID: 224914516329279324, guid: e38632af0ab7a8c4985acb9d228d895a,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 26.200018
+      value: 50.3
       objectReference: {fileID: 0}
     - target: {fileID: 114248815551484154, guid: e38632af0ab7a8c4985acb9d228d895a,
         type: 2}
@@ -598,6 +600,36 @@ Prefab:
         type: 2}
       propertyPath: m_textInfo.wordCount
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114779595750036462, guid: e38632af0ab7a8c4985acb9d228d895a,
+        type: 2}
+      propertyPath: m_fontSize
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 114779595750036462, guid: e38632af0ab7a8c4985acb9d228d895a,
+        type: 2}
+      propertyPath: m_fontSizeBase
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 114779595750036462, guid: e38632af0ab7a8c4985acb9d228d895a,
+        type: 2}
+      propertyPath: m_firstOverflowCharacterIndex
+      value: 76
+      objectReference: {fileID: 0}
+    - target: {fileID: 114779595750036462, guid: e38632af0ab7a8c4985acb9d228d895a,
+        type: 2}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114313317805568164, guid: e38632af0ab7a8c4985acb9d228d895a,
+        type: 2}
+      propertyPath: m_havePropertiesChanged
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114953484879385724, guid: e38632af0ab7a8c4985acb9d228d895a,
+        type: 2}
+      propertyPath: m_havePropertiesChanged
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e38632af0ab7a8c4985acb9d228d895a, type: 2}
